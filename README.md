@@ -1,64 +1,49 @@
-# Nuxt Starter Template
+# personal-web
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+Source for [codywilson.dev](https://codywilson.dev): the portfolio of Cody Wilson, a senior frontend engineer.
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+Built with Nuxt 4 and Nuxt UI, in a neo-brutalist theme. Static output, deployed on Netlify.
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+## Stack
 
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png" width="830" height="466">
-  </picture>
-</a>
+- [Nuxt 4](https://nuxt.com) with static generation (`nuxt generate`)
+- [Nuxt UI 4](https://ui.nuxt.com) themed in `app/app.config.ts` and `app/assets/css/main.css`
+- [Nuxt Content 3](https://content.nuxt.com) for content collections
+- Archivo (variable width) and IBM Plex Mono via `@nuxt/fonts`
+- ESLint with `eslint-plugin-vuejs-accessibility`, `vue-tsc`, Vitest
+- `@nuxt/a11y` for accessibility checks in Nuxt DevTools
 
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
+## Theme
 
-## Quick Start
+`/styleguide` is a kitchen sink of every component the site uses in the theme: tokens, type scale,
+buttons, forms, overlays, navigation, data and cards. It's excluded from search indexing.
 
-```bash [Terminal]
-npm create nuxt@latest -- -t ui
-```
+Rules the theme follows:
 
-## Deploy your own
+- Square corners, 2px ink borders, and hard offset shadows on every card-like surface
+- Mono for labels and figures, Archivo for everything else
+- Signal yellow marks hover and keyboard highlight
+- Light mode only; text contrast meets WCAG AA
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
+## Development
 
-## Setup
-
-Make sure to install the dependencies:
+Requires Node 24 (see `.nvmrc`) and pnpm via corepack.
 
 ```bash
+corepack enable
 pnpm install
+pnpm dev        # http://localhost:3000
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Checks
 
 ```bash
-pnpm dev
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm generate   # static site in .output/public
 ```
 
-## Production
+## Deploy
 
-Build the application for production:
-
-```bash
-pnpm build
-```
-
-Locally preview production build:
-
-```bash
-pnpm preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-
-## Renovate integration
-
-Install [Renovate GitHub app](https://github.com/apps/renovate/installations/select_target) on your repository and you are good to go.
+Netlify builds from `main` using `netlify.toml`: `pnpm generate`, publishing `dist/` (the netlify-static preset's output).

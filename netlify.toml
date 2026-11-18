@@ -1,0 +1,9 @@
+# Netlify build settings live here, so the dashboard doesn't need any.
+[build]
+  command = "pnpm generate"
+  # The netlify-static Nitro preset (auto-selected on Netlify) writes to dist/.
+  publish = "dist"
+
+[build.environment]
+  # Node comes from .nvmrc (24). pnpm comes from package.json "packageManager" via corepack.
+  COREPACK_ENABLE_DOWNLOAD_PROMPT = "0"

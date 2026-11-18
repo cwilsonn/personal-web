@@ -34,7 +34,9 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
-      crawlLinks: true
+      crawlLinks: true,
+      // Not linked from the site, so the crawler won't find it on its own.
+      routes: ['/styleguide']
     }
   },
 
