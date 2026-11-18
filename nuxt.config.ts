@@ -12,6 +12,17 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  app: {
+    head: {
+      script: [{
+        // Before first paint: mark <html> when play-once motion is allowed (JS + no reduced-motion
+        // preference). Without JS or with reduced motion, everything renders in its final state.
+        tagPosition: 'head',
+        innerHTML: 'if(matchMedia("(prefers-reduced-motion: no-preference)").matches)document.documentElement.classList.add("motion-ok")'
+      }]
+    }
+  },
+
   css: ['~/assets/css/main.css'],
 
   content: {

@@ -151,7 +151,11 @@ export default defineAppConfig({
       compoundVariants: [
         { color: 'secondary', variant: 'solid', class: 'text-black' },
         { color: 'warning', variant: 'solid', class: 'text-black' },
-        ...yellowTints().filter(v => v.variant !== 'ghost' && v.variant !== 'link')
+        ...yellowTints().filter(v => v.variant !== 'ghost' && v.variant !== 'link'),
+        // Nuxt UI's outline compounds add a 1px inset ring and the fog background on top of our
+        // 1px border (a doubled edge); strip them for every color.
+        ...(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] as const)
+          .map(color => ({ color, variant: 'outline' as const, class: 'ring-0 bg-paper' }))
       ]
     },
     chip: {
@@ -310,7 +314,13 @@ export default defineAppConfig({
       }
     },
     navigationMenu: {
-      slots: { link: 'font-semibold' }
+      slots: { link: 'font-semibold' },
+      compoundVariants: [
+        // Current section (scroll-spy) is an ink chip; hover is the usual yellow. Different on purpose,
+        // so "where I am" and "where I'm pointing" never look the same.
+        { variant: 'link', active: true, class: { link: 'bg-inverted text-inverted', linkLeadingIcon: 'text-inverted' } },
+        { variant: 'link', active: false, class: { link: 'text-default hover:bg-secondary hover:text-black' } }
+      ]
     },
 
     // ---- Overlays ----

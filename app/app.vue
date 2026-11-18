@@ -14,11 +14,21 @@ useHead({
   titleTemplate: title => title ? `${title} | Cody Wilson` : 'Cody Wilson | Senior Frontend Engineer'
 })
 
-const nav: NavigationMenuItem[] = [
-  { label: 'Experience', to: '/#experience' },
-  { label: 'About', to: '/#about' },
-  { label: 'Contact', to: '/#contact' }
+const sections = [
+  { id: 'experience', label: 'Experience' },
+  { id: 'about', label: 'About' },
+  { id: 'contact', label: 'Contact' }
 ]
+
+// Set by the home page's scroll-spy (useSectionSpy); null elsewhere.
+const activeSection = useActiveSection()
+
+const nav = computed<NavigationMenuItem[]>(() => sections.map(({ id, label }) => ({
+  label,
+  'to': `/#${id}`,
+  'active': activeSection.value === id,
+  'aria-current': activeSection.value === id ? 'location' : undefined
+})))
 
 const links = {
   github: 'https://github.com/cwilsonn',

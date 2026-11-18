@@ -47,3 +47,9 @@ pnpm generate   # static site in .output/public
 ## Deploy
 
 Netlify builds from `main` using `netlify.toml`: `pnpm generate`, publishing `dist/` (the netlify-static preset's output).
+
+## Image credits
+
+- `public/images/seattle-kerry-park.jpg`: "Downtown seattle from Kerry Park" by Symi81, public domain,
+  via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Downtown_seattle_from_Kerry_Park.JPG)
+  (resized to 960px and converted to black and white; served as WebP by @nuxt/image).

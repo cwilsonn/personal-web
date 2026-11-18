@@ -3,6 +3,9 @@ useSeoMeta({
   description: 'Cody Wilson is a senior frontend engineer in Seattle with ten years of experience in Vue, Nuxt and TypeScript: design systems, auth and permissions, migrations, and accessibility.'
 })
 
+// Highlights the matching link in the header nav while each section is in view.
+useSectionSpy(['experience', 'about', 'contact'])
+
 // Mock content for the homepage concept. The typed content collections task replaces this.
 interface Role {
   company: string
@@ -61,7 +64,22 @@ const roles: Role[] = [
   }
 ]
 
+// The rest of the toolbox: the Daily stack tile in the bento holds the 8 tools reached for first,
+// so these don't repeat them.
+const toolbox = ['JavaScript', 'Vite', 'Pinia', 'SCSS', 'Cypress', 'Zod', 'GraphQL', 'Node', 'Nest.js', 'PostgreSQL', 'Stytch', 'PrimeVue', 'Mapbox', 'deck.gl', 'Figma', 'Git', 'PHP', 'Drupal']
+
+// Written out in full so Nuxt Icon bundles them for the static build.
+const toolboxLogos = [
+  'i-simple-icons-vuedotjs', 'i-simple-icons-postgresql', 'i-simple-icons-figma', 'i-simple-icons-nuxt',
+  'i-simple-icons-php', 'i-simple-icons-git', 'i-simple-icons-drupal', 'i-simple-icons-graphql',
+  'i-simple-icons-nestjs'
+]
+
 const earlier = 'Elevated Third, Flows.ai and Tangent Digital, 2016–2022: Drupal, full-stack and agency work.'
+
+// "How I work" icon squares pop in one after another (play once; static under reduced motion).
+const principlesList = ref<HTMLElement | null>(null)
+const { shown: principlesIn, ready: principlesReady } = usePlayOnce(principlesList)
 
 const principles = [
   { icon: 'i-lucide-file-code', text: 'Clear, maintainable code with comments that explain why.' },
@@ -71,15 +89,24 @@ const principles = [
 </script>
 
 <template>
-  <div>
+  <div class="overflow-x-clip">
     <UContainer class="py-10 md:py-14">
       <ExperienceHighlights heading-level="h1" />
     </UContainer>
 
+    <!-- The tilted band is wider than the viewport; the root's overflow-x-clip trims it. -->
+    <TechMarquee
+      :items="toolbox"
+      :logos="toolboxLogos"
+      label="Also worked with"
+      easter-egg
+      class="mb-6"
+    />
+
     <section
       id="experience"
       aria-labelledby="experience-title"
-      class="border-t-2 border-ink py-16 md:py-24"
+      class="py-16 md:py-24"
     >
       <UContainer class="space-y-10">
         <div class="max-w-prose space-y-3">
@@ -99,7 +126,7 @@ const principles = [
             v-for="item in roles"
             :key="item.company"
           >
-            <UCard class="h-full">
+            <UCard class="reveal-on-scroll h-full">
               <template #header>
                 <div class="flex flex-wrap items-center justify-between gap-2">
                   <span>{{ item.dates }}</span>
@@ -176,17 +203,29 @@ const principles = [
           </p>
         </div>
 
-        <UCard>
+        <UCard class="reveal-on-scroll">
           <template #header>
             How I work
           </template>
-          <ul class="space-y-4">
+          <ul
+            ref="principlesList"
+            data-motion
+            :data-ready="principlesReady || undefined"
+            class="space-y-4"
+          >
             <li
-              v-for="item in principles"
+              v-for="(item, i) in principles"
               :key="item.text"
               class="flex gap-3"
             >
-              <span class="grid size-10 shrink-0 place-items-center border-2 border-ink bg-secondary text-black">
+              <span
+                :class="[
+                  'grid size-10 shrink-0 place-items-center border-2 border-ink bg-secondary text-black transition-[opacity,scale,translate] duration-500 ease-out',
+                  !principlesIn && 'translate-y-1 scale-90 opacity-0'
+                ]"
+                :style="{ transitionDelay: `${i * 90}ms` }"
+                aria-hidden="true"
+              >
                 <UIcon
                   :name="item.icon"
                   class="size-5"

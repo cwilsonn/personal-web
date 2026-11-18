@@ -17,7 +17,7 @@ const sections = [
   { id: 'cards', label: 'Cards' }
 ]
 
-const marqueePaused = ref(false)
+const stackLogos = ['i-simple-icons-vuedotjs', 'i-simple-icons-nuxt', 'i-simple-icons-typescript', 'i-simple-icons-tailwindcss', 'i-simple-icons-vite']
 
 const stack = ['Vue 3', 'Nuxt 4', 'TypeScript', 'Nuxt UI', 'Tailwind CSS', 'Vite', 'Vitest', 'TanStack Query', 'Keycloak', 'WCAG 2.2 AA']
 </script>
@@ -56,43 +56,11 @@ const stack = ['Vue 3', 'Nuxt 4', 'TypeScript', 'Nuxt UI', 'Tailwind CSS', 'Vite
       </UContainer>
     </header>
 
-    <!--
-      The marquee is the page's one piece of ambient motion. It repeats its content, so it's hidden
-      from assistive tech; it has a visible pause control (WCAG 2.2.2) and stops for reduced motion.
-    -->
-    <div class="relative">
-      <div
-        aria-hidden="true"
-        :class="[
-          '-mx-4 -rotate-1 border-y-2 border-ink bg-secondary py-3 text-black',
-          'motion-reduce:**:data-[slot=content]:animate-none',
-          marqueePaused && '**:data-[slot=content]:[animation-play-state:paused]'
-        ]"
-      >
-        <UMarquee
-          pause-on-hover
-          :ui="{ root: '[--gap:--spacing(10)] [--duration:40s]' }"
-        >
-          <span
-            v-for="item in stack"
-            :key="item"
-            class="font-display text-2xl whitespace-nowrap"
-          >
-            {{ item }}
-          </span>
-        </UMarquee>
-      </div>
-      <!-- Positioned by a wrapper: the button's own translate is used by the press-in effect. -->
-      <div class="absolute inset-y-0 right-4 flex items-center motion-reduce:hidden">
-        <UButton
-          size="xs"
-          color="neutral"
-          :icon="marqueePaused ? 'i-lucide-play' : 'i-lucide-pause'"
-          :label="marqueePaused ? 'Play' : 'Pause'"
-          @click="marqueePaused = !marqueePaused"
-        />
-      </div>
-    </div>
+    <TechMarquee
+      :items="stack"
+      :logos="stackLogos"
+      label="Stack"
+    />
 
     <UContainer class="grid gap-12 py-16 lg:grid-cols-[12rem_minmax(0,1fr)]">
       <nav

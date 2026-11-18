@@ -31,7 +31,7 @@ const spaces = { md: 'gap-4', lg: 'gap-5', xl: 'gap-8' } as const
   <component
     :is="props.as"
     :class="[
-      'flex flex-col border-2 border-ink p-6',
+      'reveal-on-scroll flex flex-col border-2 border-ink p-6',
       spaces[props.space],
       tones[props.tone],
       props.lead ? 'shadow-brutal' : 'shadow-brutal-sm'

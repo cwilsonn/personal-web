@@ -100,9 +100,15 @@
 }
 
 @layer base {
-  /* Anchored sections land below the sticky header. */
+  /* Anchored sections land below the sticky header. Nuxt's router reads this too when it scrolls
+     to a hash (it adds an element's scroll-margin on top, so don't set both). */
   html {
     scroll-padding-top: calc(var(--ui-header-height) + 1rem);
+
+    /* Smooth in-page scrolling (nav links, "Get in touch"), unless reduced motion is on. */
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -172,5 +178,68 @@
     &:active:not(:disabled, [aria-disabled='true']) {
       translate: 3px 3px;
     }
+  }
+}
+
+/*
+ * ---- Motion ----
+ * Everything renders in its final state by default. Two opt-in layers:
+ *
+ * 1. Play-once motion (count-ups, the CI bar, the device marks) runs from JS only when
+ *    <html> has .motion-ok (set before paint by a head script in nuxt.config.ts).
+ *    Elements marked [data-motion] stay hidden until hydration has put them in their
+ *    start state, so the final value never flashes first.
+ * 2. Scroll-linked reveals use CSS scroll-driven animations as a progressive enhancement:
+ *    only where supported, only without a reduced-motion preference, and no JS fallback
+ *    because they're decorative.
+ */
+.motion-ok [data-motion]:not([data-ready]) {
+  visibility: hidden;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 2rem;
+  }
+}
+
+@utility reveal-on-scroll {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      animation: rise-in ease-out backwards;
+      /* After the shorthand, which would otherwise reset them. */
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+  }
+}
+
+@keyframes photo-rise {
+  from {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+}
+
+/* The Seattle photo on small screens, where there's no hover to reveal it. */
+@utility reveal-photo-on-scroll {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      animation: photo-rise ease-out backwards;
+      animation-timeline: view();
+      animation-range: entry 30% cover 55%;
+    }
+  }
+}
+
+/* The marquee easter egg's traveler: enters off the left edge and leaves off the right. */
+@keyframes travel-across {
+  from {
+    translate: -18rem 0;
+  }
+
+  to {
+    translate: calc(100vw + 2rem) 0;
   }
 }
