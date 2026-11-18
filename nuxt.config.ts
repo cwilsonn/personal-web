@@ -21,6 +21,11 @@ export default defineNuxtConfig({
     }
   },
 
+  // Light mode only: the theme is built around ink on fog, so no color-mode module or toggle.
+  ui: {
+    colorMode: false
+  },
+
   routeRules: {
     '/': { prerender: true }
   },
@@ -40,5 +45,30 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+
+  fonts: {
+    families: [{
+      // One variable family; the width axis does the display/body split (expanded headings, normal body).
+      name: 'Archivo',
+      provider: 'google',
+      weights: ['400 900'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      providerOptions: {
+        google: {
+          experimental: {
+            variableAxis: { wdth: [['62', '125']] }
+          }
+        }
+      }
+    }, {
+      // Mono accent: static cuts, only the weights the theme uses.
+      name: 'IBM Plex Mono',
+      provider: 'google',
+      weights: [400, 500, 600],
+      styles: ['normal'],
+      subsets: ['latin']
+    }]
   }
 })

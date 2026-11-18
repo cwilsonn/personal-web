@@ -1,18 +1,176 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@theme static {
-  --font-sans: 'Public Sans', sans-serif;
+/*
+ * Neo-brutalist theme.
+ *
+ * Palette (light):
+ *   ink     #000000  borders, text, hard shadows
+ *   fog     #E5F0EA  page background (cool overcast grey-green)
+ *   paper   #FFFFFF  raised surfaces
+ *   ferry   #007543  primary (ferry-700; 5.8:1 with white text)
+ *   signal  #FFDC3D  highlighter accent, used sparingly
+ *
+ * Light mode only (decided 2026-11-17): the theme is built around ink on fog.
+ */
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
+@theme static {
+  --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  /* Accent face for numbers, dates, code, keys, and tags. Carried over from the previous site. */
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* ferry: oklch hue 158 */
+  --color-ferry-50: #CAFFE3;
+  --color-ferry-100: #BDFFD7;
+  --color-ferry-200: #A6F0C5;
+  --color-ferry-300: #89DDAD;
+  --color-ferry-400: #63C590;
+  --color-ferry-500: #2EAB71;
+  --color-ferry-600: #009055;
+  --color-ferry-700: #007543;
+  --color-ferry-800: #005C31;
+  --color-ferry-900: #004722;
+  --color-ferry-950: #002D10;
+
+  /* signal: highlighter yellow */
+  --color-signal-50: #FFFBE0;
+  --color-signal-100: #FFF3B0;
+  --color-signal-200: #FFE97A;
+  --color-signal-300: #FFDC3D;
+  --color-signal-400: #F5C800;
+  --color-signal-500: #D6A800;
+  --color-signal-600: #A88300;
+  --color-signal-700: #7D6100;
+  --color-signal-800: #5C4700;
+  --color-signal-900: #423300;
+  --color-signal-950: #2A2000;
+
+  /* fog: low-chroma neutral, hue 165 */
+  --color-fog-50: #EFFAF4;
+  --color-fog-100: #E5F0EA;
+  --color-fog-200: #D4DFDA;
+  --color-fog-300: #BFCAC5;
+  --color-fog-400: #A6B1AC;
+  --color-fog-500: #8B9590;
+  --color-fog-600: #707A75;
+  --color-fog-700: #59635E;
+  --color-fog-800: #444D48;
+  --color-fog-900: #313A36;
+  --color-fog-950: #1C2420;
+
+  /* Type scale (px): 16 / 18 / 21 / 24 / 36 / 48 / 72 / 96 */
+  --text-display: 6rem;
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.03em;
+}
+
+/* Values that change with color mode, exposed as utilities (border-ink, shadow-brutal). */
+@theme inline {
+  --color-ink: var(--brutal-ink);
+  --color-paper: var(--brutal-paper);
+  --shadow-brutal-sm: 3px 3px 0 0 var(--brutal-shadow);
+  --shadow-brutal: 6px 6px 0 0 var(--brutal-shadow);
+  --shadow-brutal-lg: 10px 10px 0 0 var(--brutal-shadow);
+}
+
+:root {
+  --ui-radius: 0rem;
+
+  --brutal-ink: #000;
+  --brutal-paper: #fff;
+  --brutal-shadow: #000;
+
+  --ui-primary: var(--ui-color-primary-700);
+  --ui-secondary: var(--ui-color-secondary-300);
+  --ui-success: var(--ui-color-success-700);
+  --ui-info: var(--ui-color-info-700);
+  --ui-warning: var(--ui-color-warning-300);
+  --ui-error: var(--ui-color-error-700);
+  --ui-bg: var(--ui-color-neutral-100);
+  --ui-bg-muted: var(--ui-color-neutral-50);
+  --ui-bg-elevated: #fff;
+  --ui-bg-inverted: #000;
+  --ui-text: #000;
+  --ui-text-highlighted: #000;
+  --ui-text-toned: var(--ui-color-neutral-800);
+  --ui-text-muted: var(--ui-color-neutral-700);
+  --ui-border: #000;
+  --ui-border-accented: #000;
+  --ui-border-inverted: #fff;
+}
+
+@layer base {
+  /* Anchored sections land below the sticky header. */
+  html {
+    scroll-padding-top: calc(var(--ui-header-height) + 1rem);
+  }
+
+  body {
+    font-variation-settings: 'wdth' 100;
+  }
+
+  /* Expanded heavy cut of Archivo for headings: the type is the brand. */
+  h1, h2, h3 {
+    font-weight: 850;
+    /* @nuxt/fonts emits no font-stretch range in @font-face, so drive the axis directly. */
+    font-variation-settings: 'wdth' 125;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-signal-300);
+    color: #000;
+  }
+
+}
+
+/*
+ * Keyboard focus never relies on the offset shadow. Unlayered and !important on
+ * purpose: Nuxt UI's per-component utilities default to a 25%-alpha outline,
+ * which is too faint against the fog background.
+ *
+ * Text fields are excluded: they show focus with a primary ring, the hard shadow and a caret,
+ * and an extra offset outline around every typed-in field reads as noise.
+ */
+:focus-visible:not(input, textarea) {
+  outline: 3px solid var(--ui-primary) !important;
+  outline-offset: 3px !important;
+}
+
+/*
+ * Same treatment as headings, for non-heading elements (card titles, stats).
+ * Pair with font-[850] in component slots so tailwind-merge drops Nuxt UI's font-semibold.
+ */
+@utility font-display {
+  font-weight: 850;
+  font-variation-settings: 'wdth' 125;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * Press-in interaction for brutalist controls. The shadow change always applies;
+ * the movement is opt-in, so reduced motion gets a static control rather than a cancelled animation.
+ */
+@utility brutal-press {
+  &:hover:not(:disabled, [aria-disabled='true']) {
+    box-shadow: 5px 5px 0 0 var(--brutal-shadow);
+  }
+
+  &:active:not(:disabled, [aria-disabled='true']) {
+    box-shadow: 0 0 0 0 var(--brutal-shadow);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition-property: translate, box-shadow;
+    transition-duration: 120ms;
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      translate: -2px -2px;
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      translate: 3px 3px;
+    }
+  }
 }
