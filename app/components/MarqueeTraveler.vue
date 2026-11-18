@@ -22,7 +22,8 @@ const travelers = [
   { emoji: '⛴️', caption: 'West Seattle Water Taxi', flip: true },
   { emoji: '🌭', caption: 'Seattle Dog, cream cheese', flip: false },
   { emoji: '☕', caption: 'Third coffee today', flip: false },
-  { emoji: '🐟', caption: 'Incoming from Pike Place', flip: true }
+  { emoji: '🐟', caption: 'Incoming from Pike Place', flip: true },
+  { emoji: '🍺', caption: 'Rainier for Life', flip: false }
 ] as const
 
 const root = ref<HTMLElement | null>(null)
