@@ -44,7 +44,7 @@ const roles: Role[] = [
     company: 'Thermo Fisher Scientific',
     engagement: 'Contract via Insight Global, then full-time',
     role: 'Software Engineer III',
-    dates: '2023-09 → 2025-07',
+    dates: '2023-08 → 2025-07',
     points: [
       'Led the migration of 1,000+ components from Vue 2 to Vue 3 and Vite: local dev builds went from 60s to 5s, and 30K+ lines of legacy code were removed.',
       'Designed a WCAG-compliant component library with schema-driven forms and data tables.',
@@ -54,7 +54,7 @@ const roles: Role[] = [
   {
     company: 'Sonar Software',
     engagement: 'Full-time',
-    role: 'Software Developer',
+    role: 'Software Engineer',
     dates: '2022-01 → 2023-07',
     points: [
       'Built Vue and TypeScript UIs for a multi-tenant ISP management platform.',
