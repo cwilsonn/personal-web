@@ -25,7 +25,7 @@ const roles: Role[] = [
     current: true,
     points: [
       'Built the proof of concept that replaced a monolithic .NET auth app with a Keycloak API package and a reusable Nuxt auth layer.',
-      'Moved data fetching from provide/inject chains to TanStack Query composables, cutting average page loads by 50%+.',
+      'Moved data fetching from provide/inject chains to TanStack Query composables, cutting average data-loading time by 25%+.',
       'Integrated 4 radiation monitoring devices in under 2 months, to SRS in an NQA-1 environment.'
     ]
   },
@@ -46,7 +46,7 @@ const roles: Role[] = [
     role: 'Software Engineer III',
     dates: '2023-09 → 2025-07',
     points: [
-      'Led the migration of 1,000+ components from Vue 2 to Vue 3 and Vite: CI went from 60s to 5s, and 30K+ lines of legacy code were removed.',
+      'Led the migration of 1,000+ components from Vue 2 to Vue 3 and Vite: local dev builds went from 60s to 5s, and 30K+ lines of legacy code were removed.',
       'Designed a WCAG-compliant component library with schema-driven forms and data tables.',
       'Co-built a generative AI product matching tool that placed 2nd of 100+ entries.'
     ]

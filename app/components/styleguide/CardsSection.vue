@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const stats = [
-  { value: '60s → 5s', label: 'CI build time after moving 1,000+ components from Vue 2 to Vue 3 and Vite', where: 'Thermo Fisher' },
-  { value: '50%+', label: 'Faster average page loads after moving data fetching to TanStack Query', where: 'Mirion' },
-  { value: '-10K', label: 'Lines of code removed by merging duplicate solution paths into one', where: 'Mirion' },
+  { value: '60s → 5s', label: 'Local dev server build time after moving 1,000+ components from Vue 2 to Vue 3 and Vite', where: 'Thermo Fisher' },
+  { value: '25%+', label: 'Faster data loading after moving data fetching to TanStack Query', where: 'Mirion' },
+  { value: '-20K', label: 'Lines of code removed by merging duplicate solution paths into one', where: 'Mirion' },
   { value: '500+', label: 'Staff hours saved per year by a bulk SKU lookup tool', where: 'Thermo Fisher' }
 ]
 

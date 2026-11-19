@@ -30,7 +30,7 @@ const a11y = ['Semantic HTML first', 'Correct ARIA roles and attributes', 'Text 
 
 // ---- Play-once motion (see the Motion block in main.css). Final state is the default. ----
 
-// CI bar: starts level with the Vue 2 bar, then shrinks while the figure counts 60s → 5s.
+// Dev-build bar: starts level with the Vue 2 bar, then shrinks while the figure counts 60s → 5s.
 const ciFigure = ref<HTMLElement | null>(null)
 const ciPending = ref(false)
 const ciReady = ref(false)
@@ -102,7 +102,7 @@ useInViewOnce(ciFigure, () => (ciPending.value = false), { threshold: 0.6 })
       </div>
     </BentoTile>
 
-    <!-- CI before/after: two values, so two labelled bars instead of a chart -->
+    <!-- Dev server build time before/after (local, not CI): two values, so two labelled bars instead of a chart -->
     <BentoTile
       space="lg"
       class="sm:col-span-2 md:col-span-4 lg:col-span-3"
@@ -110,7 +110,7 @@ useInViewOnce(ciFigure, () => (ciPending.value = false), { threshold: 0.6 })
       <div class="flex items-start justify-between gap-4">
         <div>
           <p class="font-mono text-sm font-medium text-muted">
-            CI build time
+            Dev server build time
           </p>
           <p class="mt-1 font-mono text-4xl font-semibold tracking-tight md:text-5xl">
             60s → <CountUp
@@ -132,7 +132,7 @@ useInViewOnce(ciFigure, () => (ciPending.value = false), { threshold: 0.6 })
         class="space-y-3"
       >
         <figcaption class="sr-only">
-          CI build took {{ ci.before }} seconds on Vue 2 and {{ ci.after }} seconds after the move to Vue 3 and Vite.
+          The local dev server build took {{ ci.before }} seconds on Vue 2 and {{ ci.after }} seconds after the move to Vue 3 and Vite.
         </figcaption>
         <div
           class="grid grid-cols-[6.5rem_1fr] items-center gap-3"
@@ -250,12 +250,12 @@ useInViewOnce(ciFigure, () => (ciPending.value = false), { threshold: 0.6 })
       <div>
         <p class="font-mono text-4xl font-semibold tracking-tight">
           <CountUp
-            :to="50"
+            :to="25"
             suffix="%+"
           />
         </p>
         <p class="mt-2 text-sm text-toned">
-          Faster average page loads with TanStack Query. Mirion.
+          Faster data loading with TanStack Query caching. Mirion.
         </p>
       </div>
     </BentoTile>
@@ -269,7 +269,7 @@ useInViewOnce(ciFigure, () => (ciPending.value = false), { threshold: 0.6 })
       <div>
         <p class="font-mono text-4xl font-semibold tracking-tight">
           <CountUp
-            :to="-10"
+            :to="-20"
             suffix="K"
           />
         </p>
